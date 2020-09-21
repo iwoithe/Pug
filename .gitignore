@@ -1,1 +1,8 @@
+# Ignore the python cache files
 __pycache__
+
+# Igonore the PyPi packages list as it keeps changing
+pypipackages.txt
+
+# Ignore any backup folders
+backup
