@@ -22,6 +22,7 @@
 #
 
 import sys
+import time
 import subprocess
 
 from PyQt5 import uic
@@ -35,17 +36,27 @@ class Uninstall(QDockWidget):
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.packages = self.get_packages()
+        self.packages_model = QStringListModel(self.get_packages())
+
+        self.proxy_packages_model = QSortFilterProxyModel()
+        self.proxy_packages_model.setSourceModel(self.packages_model)
 
         # Setup the user interface
         self.parent = parent
         self.setup_ui()
 
+        try:
+            self.parent.console.add_text("Number of Installed Packages: " + str(self.packages_model.rowCount()))
+        except:
+            print("Number of Installed Packages: " + self.packages_model.rowCount())
+
     def setup_ui(self):
         uic.loadUi('ui/docks/uninstall/uninstall.ui', self)
         self.bind_signals()
 
-        # Update the package list on intialisation
+        self.packages_list.setModel(self.proxy_packages_model)
+
+        # Update the package list on initialisation
         self.update_package_list("")
 
     def bind_signals(self):
@@ -78,23 +89,31 @@ class Uninstall(QDockWidget):
 
     @pyqtSlot(str)
     def update_package_list(self, text):
-        """ Update the package list """
+        """ Update (filter) the package list """
+        # Using a QListView instead of QListWidget for better performance
+        # TODO: Create option in GUI to slice the list of PyPi packages
+        #       to get quicker load time
 
-        # Clear the packages list
-        self.packages_list.clear()
+        start_time = time.time()
 
-        # Add the packages that match the search to the packages list
-        for package in self.packages:
-            if text.lower() in package.lower():
-                QListWidgetItem(package, self.packages_list)
+        # Filter the packages
+        self.proxy_packages_model.setFilterFixedString(text)
+
+        end_time = time.time()
+
+        try:
+            self.parent.console.add_text("Filtering Installed Packages Time: " + str(end_time - start_time))
+        except:
+            print("Filtering Installed Packages Time: " + str(end_time - start_time))
+
 
     @pyqtSlot()
     def uninstall_package(self, python_version=3):
         """ Uninstalls the selected package """
-        current_item = self.packages_list.currentItem()
+        current_item_index = self.packages_list.currentIndex()
 
-        if current_item:
-            package = current_item.text()
+        if current_item_index:
+            package = current_item_index.data(Qt.DisplayRole)
             self.pip_process = QProcess()
 
             if python_version == 3:

@@ -38,7 +38,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QListWidget" name="packages_list"/>
+       <widget class="QListView" name="packages_list"/>
       </item>
      </layout>
     </item>

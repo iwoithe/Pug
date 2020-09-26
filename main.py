@@ -59,9 +59,11 @@ class Pug(QMainWindow):
 
     def add_docks(self):
         # There is no central layout, use docks instead
+        # Console has to be defined first to avoid errors
+        self.console = Console(parent=self)
+
         self.install = Install(parent=self)
         self.uninstall = Uninstall(parent=self)
-        self.console = Console(parent=self)
 
         # Add the docks to the display
         self.addDockWidget(Qt.LeftDockWidgetArea, self.install)

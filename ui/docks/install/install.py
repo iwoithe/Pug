@@ -44,20 +44,14 @@ class Install(QDockWidget):
         super().__init__(*args, **kwargs)
 
         # Load the packages
-        self.package_source_model = QStringListModel(self.get_packages())
-
-        try:
-            self.parent.console.add_text(("Number of PyPi Packages:", self.package_source_model.rowCount()))
-        except:
-            print("Number of PyPi Packages:", self.package_source_model.rowCount())
+        self.packages_model = QStringListModel(self.get_packages())
 
         self.proxy_packages_model = QSortFilterProxyModel()
-        self.proxy_packages_model.setSourceModel(self.package_source_model)
+        self.proxy_packages_model.setSourceModel(self.packages_model)
 
         # Setup the user interface
         self.parent = parent
         self.setup_ui()
-        self.update_package_list("")
 
     def setup_ui(self):
         uic.loadUi('ui/docks/install/install.ui', self)
@@ -73,6 +67,8 @@ class Install(QDockWidget):
         self.bind_signals()
 
         self.packages_list.setModel(self.proxy_packages_model)
+
+        self.update_package_list("")
 
     def bind_signals(self):
         self.entry_search.textEdited.connect(self.update_package_list)
@@ -106,9 +102,9 @@ class Install(QDockWidget):
         end_time = time.time()
 
         try:
-            self.parent.console.add_text(("Filtering Packages Time:", str(end_time - start_time)))
+            self.parent.console.add_text("Filtering PyPi Packages Time: " + str(end_time - start_time))
         except:
-            print("Filtering Packages Time:", str(end_time - start_time))
+            print("Filtering PyPi Packages Time: " + str(end_time - start_time))
 
     @pyqtSlot(str)
     def update_package_info(self, package_name):
@@ -119,17 +115,15 @@ class Install(QDockWidget):
     @pyqtSlot()
     def install_package(self, python_version=3):
         """ Installs the selected package """
-        #current_item = self.packages_list.currentItem()
         current_item_index = self.packages_list.currentIndex()
-        package = current_item_index.data(Qt.DisplayRole)
 
         try:
             python_version = self.button_group_version.checkedButton().version
         except:
             pass
 
-        if package:
-            #package = current_item.text()
+        if current_item_index:
+            package = current_item_index.data(Qt.DisplayRole)
             self.pip_process = QProcess()
 
             if python_version == 3:
