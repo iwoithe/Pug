@@ -42,10 +42,15 @@ from core import piputils
 class Install(QDockWidget):
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(len(self.get_packages()))
 
         # Load the packages
         self.package_source_model = QStringListModel(self.get_packages())
+
+        try:
+            self.parent.console.add_text(("Number of PyPi Packages:", self.package_source_model.rowCount()))
+        except:
+            print("Number of PyPi Packages:", self.package_source_model.rowCount())
+
         self.proxy_packages_model = QSortFilterProxyModel()
         self.proxy_packages_model.setSourceModel(self.package_source_model)
 
@@ -93,39 +98,23 @@ class Install(QDockWidget):
         # TODO: Create option in GUI to slice the list of PyPi packages
         #       to get quicker load time
 
-        # Add the packages to the packages list
         start_time = time.time()
 
+        # Filter the packages
         self.proxy_packages_model.setFilterFixedString(text)
 
         end_time = time.time()
-        print("Time:", str(end_time - start_time))
+
+        try:
+            self.parent.console.add_text(("Filtering Packages Time:", str(end_time - start_time)))
+        except:
+            print("Filtering Packages Time:", str(end_time - start_time))
 
     @pyqtSlot(str)
     def update_package_info(self, package_name):
         """ Update the preview of the package """
 
-        URL = "https://pypi.org/project/" + package_name
-
-        try:
-            source = urlopen(URL)
-        except URLError as e:
-            error = str(e)
-            try:
-                self.parent.console.add_text(error)
-            except:
-                print(error)
-
-            return
-
-        # lxml is faster than html.parser
-        soup = BeautifulSoup(source, "lxml")
-
-        package_links = soup.find_all("a")
-        source_code_links = []
-        for link in package_links:
-            if "source code" in link.get_text().lower():
-                source_code_links.append(link)
+        pass
 
     @pyqtSlot()
     def install_package(self, python_version=3):
@@ -141,7 +130,6 @@ class Install(QDockWidget):
 
         if package:
             #package = current_item.text()
-            print(package)
             self.pip_process = QProcess()
 
             if python_version == 3:

@@ -38,6 +38,9 @@ from ui.preferences import PreferencesDialog
 from ui.toolbars import PackageListsToolbar
 
 
+# TODO: Use the logging library instead of print
+
+
 class Pug(QMainWindow):
 
     settings_file = "data/settings.json"
@@ -56,9 +59,9 @@ class Pug(QMainWindow):
 
     def add_docks(self):
         # There is no central layout, use docks instead
-        self.install = Install(self)
-        self.uninstall = Uninstall(self)
-        self.console = Console(self)
+        self.install = Install(parent=self)
+        self.uninstall = Uninstall(parent=self)
+        self.console = Console(parent=self)
 
         # Add the docks to the display
         self.addDockWidget(Qt.LeftDockWidgetArea, self.install)
