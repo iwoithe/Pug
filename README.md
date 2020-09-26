@@ -1,26 +1,26 @@
 # Pug
 
-Pug is a cross-platform, free and open source GUI for PIP.
+A cross-platform, free and open source GUI for PIP.
 
 ![Screenshot of Pug](screenshots/demo.png)
 
 ## Features
 
- - Install packages from PyPi
- - Option to install package for current user
- - Option to install package for either Python 2 or 3
- - Uninstall packages
- - Console to view progress
+- Install packages from PyPi
+- Option to install package for current user
+- Option to install package for either Python 2 or 3
+- Uninstall packages
+- Console to view progress
 
 ## Todo
 
- - [ ] Create an icon/logo
- - [ ] Improve performance
- - [ ] Create ``Upgrade Package``
- - [ ] Create ``Install Requirements``
- - [ ] Preview Package (in ``Install Package`` and ``Uninstall Package``)
- - [ ] Create more styles
- - [ ] Write a plugin system
+- [ ] Create an icon/logo
+- [ ] Improve performance
+- [ ] Create ``Upgrade Package``
+- [ ] Create ``Install Requirements``
+- [ ] Preview Package (in ``Install Package`` and ``Uninstall Package``)
+- [ ] Create more styles
+- [ ] Write a plugin system
 
 ## Contributing
 
