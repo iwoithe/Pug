@@ -10,6 +10,3 @@ backup
 # Ignore PyCharm folders/files
 .idea
 .swp
-
-# Ignore screenshots
-screenshots
