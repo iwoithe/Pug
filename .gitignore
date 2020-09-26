@@ -6,3 +6,10 @@ pypipackages.txt
 
 # Ignore any backup folders
 backup
+
+# Ignore PyCharm folders/files
+.idea
+.swp
+
+# Ignore screenshots
+screenshots
