@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Console</class>
+ <widget class="QDockWidget" name="Console">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Console</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="layout_console_buttons">
+      <item>
+       <widget class="QPushButton" name="button_clear">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPlainTextEdit" name="console_text">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="9"/>
+ <resources/>
+ <connections/>
+</ui>
