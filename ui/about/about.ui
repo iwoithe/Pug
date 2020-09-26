@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>430</width>
     <height>380</height>
    </rect>
   </property>
@@ -68,6 +68,20 @@
          </property>
          <property name="markdown">
           <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_license">
+      <attribute name="title">
+       <string>License</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QTextEdit" name="license_text">
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

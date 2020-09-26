@@ -43,21 +43,23 @@ class About(QDialog):
         uic.loadUi("ui/about/about.ui", self)
         self.bind_signals()
 
-        about_text = self.get_readme()
-
+        about_text = self.get_file("README.md")
         self.about_text.setMarkdown(about_text)
+
+        license_text = self.get_file("LICENSE")
+        self.license_text.setPlainText(license_text)
 
     def bind_signals(self):
         self.button_box.accepted.connect(self.accept)
 
-    def get_readme(self) -> str:
+    def get_file(self, file_path) -> str:
         """ Gets the text in the README file """
-        readme_text: str
+        file_text: str
 
-        with open("README.md") as f:
-            readme_text = f.read()
+        with open(file_path) as f:
+            file_text = f.read()
 
-        return readme_text
+        return file_text
 
 
 if __name__ == "__main__":
