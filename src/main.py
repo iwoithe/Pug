@@ -30,18 +30,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-import ui
+import Pug.ui
 
-from ui.about import About
-from ui.docks import Install, Uninstall, Console
-from ui.preferences import PreferencesDialog
-from ui.toolbars import PackageListsToolbar
+from Pug.ui.about import About
+from Pug.ui.docks import Install, Uninstall, Console
+from Pug.ui.preferences import PreferencesDialog
+from Pug.ui.toolbars import PackageListsToolbar
 
 
 # TODO: Use the logging library instead of print
 
 
-class Pug(QMainWindow):
+class PugWindow(QMainWindow):
 
     settings_file = "data/settings.json"
     with open(settings_file) as f:
@@ -141,8 +141,8 @@ class Pug(QMainWindow):
         self.setMenuBar(menu_bar)
 
         # Set the style
-        style = ui.utils.load_style_from_file(os.path.join("data/styles/", self.settings["Style"].lower() + ".qss"))
-        ui.utils.apply_style(style)
+        style = Pug.ui.utils.load_style_from_file(os.path.join("data/styles/", self.settings["Style"].lower() + ".qss"))
+        Pug.ui.utils.apply_style(style)
 
         # Configure dock widgets
         self.setTabPosition(Qt.AllDockWidgetAreas, QTabWidget.North)
@@ -168,6 +168,6 @@ class Pug(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle("fusion")
-    pug = Pug()
+    pug = PugWindow()
     pug.show()
     sys.exit(app.exec())

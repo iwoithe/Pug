@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  console.py
+#  packagelists.py
 #
 #  Copyright 2020 iwoithe <iwoithe@just42.net>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 3 of the License.
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,14 +24,14 @@
 
 import sys
 
-from PyQt5 import uic
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from Pug.core.piputils import *
 
-class Console(QDockWidget):
+
+class PackageListsToolbar(QToolBar):
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -39,23 +40,35 @@ class Console(QDockWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi('ui/docks/console/console.ui', self)
+        self.setup_actions()
+        self.add_actions()
         self.bind_signals()
 
+        self.setWindowTitle("Package Lists Toolbar")
+        icon_size = self.parent.settings["Icon Size"]
+        self.setIconSize(QSize(*icon_size))
+
+    def setup_actions(self):
+        # Download PyPI Package List action
+        self.download_pypi_package_list_action = QAction(QIcon("data/assets/download_pypi_package_list.svg"), "Download PyPI Package List", self)
+
+    def add_actions(self):
+        self.addAction(self.download_pypi_package_list_action)
+
     def bind_signals(self):
-        self.button_clear.clicked.connect(self.clear_console)
+        # Download PyPI Package List action
+        self.download_pypi_package_list_action.triggered.connect(self.download_pypi_package_list)
 
-    def add_text(self, text):
-        self.console_text.appendPlainText(text)
-
-    @pyqtSlot()
-    def clear_console(self):
-        self.console_text.clear()
+    def download_pypi_package_list(self):
+        try:
+            save_pypi_package_list(self.parent.console)
+        except:
+            save_pypi_package_list()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle("fusion")
-    console = Console()
-    console.show()
+    package_lists_toolbar = PackageListsToolbar(QToolBar)
+    package_lists_toolbar.show()
     sys.exit(app.exec())

@@ -51,7 +51,7 @@ class Uninstall(QDockWidget):
             print("Number of Installed Packages: " + self.packages_model.rowCount())
 
     def setup_ui(self):
-        uic.loadUi('ui/docks/uninstall/uninstall.ui', self)
+        uic.loadUi('Pug/ui/docks/uninstall/uninstall.ui', self)
         self.bind_signals()
 
         self.packages_list.setModel(self.proxy_packages_model)

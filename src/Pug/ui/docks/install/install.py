@@ -25,18 +25,13 @@ import sys
 import time
 import subprocess
 
-from urllib.error import URLError
-from urllib.request import urlopen
-
 from PyQt5 import uic
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from bs4 import BeautifulSoup
-
-from core import piputils
+from Pug.core import piputils
 
 
 class Install(QDockWidget):
@@ -54,7 +49,7 @@ class Install(QDockWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi('ui/docks/install/install.ui', self)
+        uic.loadUi('Pug/ui/docks/install/install.ui', self)
 
         # Add the version button group
         self.radio_python_2.version = 2
