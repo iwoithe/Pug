@@ -65,6 +65,7 @@ def save_pypi_package_list(console=None):
 
 def load_pypi_package_list() -> list:
     """ Loads the saved pypi package list """
+    # TODO: Add support for slicing the list
     with open("data/pip/pypipackages.txt") as f:
         packages = f.read().split(",")
 
@@ -82,4 +83,12 @@ def load_installed_package_list() -> list:
 
 
 def save_installed_package_list():
+    pass
+
+
+def install_package(package_name):
+    """ Install a package using PIP
+
+    :param package_name: The name of the package
+    :type package_name: str """
     pass

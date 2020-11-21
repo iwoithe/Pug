@@ -1,0 +1,1 @@
+from .quickinstall import QuickInstall
