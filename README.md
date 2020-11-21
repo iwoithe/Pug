@@ -14,7 +14,7 @@ A cross-platform, free and open source GUI for PIP.
 
 ## Installing
 
-At this time, Pug is a source only distribution.
+At this time, Pug is a source only distribution. Binaries will be provided soon.
 
 1. Make sure [Python](https://www.python.org/downloads) is installed. Both Python 3.7 and 3.8 have been tested.
 
@@ -52,7 +52,7 @@ To run Pug:
    python -i main.py
    ```
 
-### Another Method of Running Random Group Generator on Windows
+### Another Method of Running Pug on Windows
 
 1. Navigate to the top level directory of Pug.
 
@@ -60,13 +60,20 @@ To run Pug:
 
 ## Todo
 
+- [ ] Add Quick Install and Quick Uninstall docks to install packages you know the name of
+- [ ] Move all PIP methods (e.g. installing packages, uninstalling packages, getting the list of packages) to the PIP utils file (``Pug/core/piputils.py``)
 - [ ] Create an icon/logo
 - [ ] Improve performance
-- [ ] Create ``Upgrade Package``
-- [ ] Create ``Install Requirements``
+- [ ] Create ``Upgrade Package`` dock
+- [ ] Create ``Install Requirements`` dock
+- [ ] Create ``Install Local Package`` dock
+- [ ] Add option for PIP's ``-e`` option
 - [ ] Preview Package (in ``Install Package`` and ``Uninstall Package``)
 - [ ] Create more styles
 - [ ] Write a plugin system
+- [ ] Support for Pipenv and/or Virtualenv (?)
+- [ ] Create an option to install from Conda (or and other Python package managers) (?)
+- [ ] Create documentation
 
 ## Contributing
 
@@ -74,7 +81,7 @@ Pug is a work in progress and is no where near ready for version 1.0.0. Contribu
 
 ## Help
 
-For any bugs, feature requests or support, please open an issue on Gitlab.
+For any bugs, feature requests or support, please open an issue on GitLab or GitHub.
 
 ## License
 
