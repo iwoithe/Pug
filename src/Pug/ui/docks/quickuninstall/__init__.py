@@ -1,0 +1,1 @@
+from .quickuninstall import QuickUninstall

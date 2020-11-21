@@ -33,7 +33,7 @@ from PyQt5.QtWidgets import *
 import Pug.ui
 
 from Pug.ui.about import About
-from Pug.ui.docks import Install, Uninstall, Console, QuickInstall
+from Pug.ui.docks import Install, Uninstall, Console, QuickInstall, QuickUninstall
 from Pug.ui.preferences import PreferencesDialog
 from Pug.ui.toolbars import PackageListsToolbar
 
@@ -66,15 +66,18 @@ class PugWindow(QMainWindow):
         self.uninstall = Uninstall(parent=self)
 
         self.quick_install = QuickInstall(parent=self)
+        self.quick_uninstall = QuickUninstall(parent=self)
 
         # Add the docks to the display
         self.addDockWidget(Qt.LeftDockWidgetArea, self.install)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.uninstall)
         self.addDockWidget(Qt.RightDockWidgetArea, self.console)
         self.addDockWidget(Qt.BottomDockWidgetArea, self.quick_install)
+        self.addDockWidget(Qt.BottomDockWidgetArea, self.quick_uninstall)
 
         # Split/Group docks as necessary
         self.splitDockWidget(self.install, self.uninstall, Qt.Vertical)
+        self.splitDockWidget(self.quick_install, self.quick_uninstall, Qt.Horizontal)
 
     def add_toolbars(self):
         self.package_lists = PackageListsToolbar(self)
@@ -123,8 +126,9 @@ class PugWindow(QMainWindow):
         # Docks
         docks_menu = view_menu.addMenu("Docks")
         docks_menu.addAction(self.install.toggleViewAction())
-        docks_menu.addAction(self.quick_install.toggleViewAction())
         docks_menu.addAction(self.uninstall.toggleViewAction())
+        docks_menu.addAction(self.quick_install.toggleViewAction())
+        docks_menu.addAction(self.quick_uninstall.toggleViewAction())
         docks_menu.addAction(self.console.toggleViewAction())
 
         # Help
