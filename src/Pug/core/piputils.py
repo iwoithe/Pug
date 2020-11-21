@@ -74,5 +74,12 @@ def load_pypi_package_list() -> list:
     return packages
 
 
+def load_installed_package_list() -> list:
+    # TODO: Use this method inside of the Uninstall dock
+    installed_packages = []
+
+    return installed_packages
+
+
 def save_installed_package_list():
     pass
