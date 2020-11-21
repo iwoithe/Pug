@@ -60,10 +60,10 @@ To run Pug:
 
 ## Todo
 
-- [ ] Add Quick Install and Quick Uninstall docks to install packages you know the name of
+- [x] Add Quick Install and Quick Uninstall docks to install packages you know the name of
 - [ ] Move all PIP methods (e.g. installing packages, uninstalling packages, getting the list of packages) to the PIP utils file (``Pug/core/piputils.py``)
 - [ ] Create an icon/logo
-- [ ] Improve performance
+- [ ] Improve performance and start up time
 - [ ] Create ``Upgrade Package`` dock
 - [ ] Create ``Install Requirements`` dock
 - [ ] Create ``Install Local Package`` dock
