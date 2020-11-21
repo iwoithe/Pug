@@ -40,13 +40,13 @@ class About(QDialog):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi("ui/about/about.ui", self)
+        uic.loadUi("Pug/ui/about/about.ui", self)
         self.bind_signals()
 
-        about_text = self.get_file("README.md")
+        about_text = self.get_file("../README.md")
         self.about_text.setMarkdown(about_text)
 
-        license_text = self.get_file("LICENSE")
+        license_text = self.get_file("../LICENSE")
         self.license_text.setPlainText(license_text)
 
     def bind_signals(self):

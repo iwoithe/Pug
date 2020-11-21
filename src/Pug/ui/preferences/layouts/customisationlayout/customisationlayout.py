@@ -39,7 +39,7 @@ class CustomisationLayout(QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi('ui/preferences/layouts/customisationlayout/customisationlayout.ui', self)
+        uic.loadUi('Pug/ui/preferences/layouts/customisationlayout/customisationlayout.ui', self)
         self.bind_signals()
 
     def bind_signals(self):

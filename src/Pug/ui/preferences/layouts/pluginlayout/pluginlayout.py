@@ -39,7 +39,7 @@ class PluginLayout(QWidget):
         self.setup_ui()
 
     def setup_ui(self):
-        uic.loadUi('ui/preferences/layouts/pluginlayout/pluginlayout.ui', self)
+        uic.loadUi('Pug/ui/preferences/layouts/pluginlayout/pluginlayout.ui', self)
 
         self.load_plugin_paths()
 

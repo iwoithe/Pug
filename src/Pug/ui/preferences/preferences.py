@@ -29,9 +29,8 @@ from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-from .. import utils
-
-from .layouts import *
+from Pug.ui import utils
+from Pug.ui.preferences.layouts import *
 
 
 class PreferencesDialog(QDialog):
@@ -48,7 +47,7 @@ class PreferencesDialog(QDialog):
         #self.setWindowIcon(QIcon("icon.png"))
 
     def setup_ui(self):
-        uic.loadUi("ui/preferences/preferences.ui", self)
+        uic.loadUi("Pug/ui/preferences/preferences.ui", self)
 
         # Customisation
         self.customisation_settings = CustomisationLayout()
