@@ -21,7 +21,7 @@
 #
 #
 
-import subprocess
+import shutil
 
 from PyQt5 import uic
 from PyQt5.QtCore import *
@@ -67,13 +67,10 @@ class QuickInstall(QDockWidget):
             self.pip_process = QProcess()
 
             if python_version == 3:
-                # Use Pip's module to avoid warnings, on Linux
-                try:
-                    # Try the python3 command, otherwise fallback to the
-                    # python command
-                    subprocess.run(['python3'], check=True)
+                # Try the python3 command, otherwise fallback to the python command
+                if shutil.which("python3"):
                     self.pip_process.setProgram("python3")
-                except FileNotFoundError:
+                else:
                     self.pip_process.setProgram("python")
             else:
                 self.pip_process.setProgram("python")
