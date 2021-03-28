@@ -24,7 +24,6 @@
 import sys
 import time
 import shutil
-import subprocess
 
 from PyQt5 import uic
 
@@ -37,10 +36,11 @@ class Uninstall(QDockWidget):
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.packages_model = QStringListModel(self.get_packages())
+        self.packages_list = []
+        self.get_packages()
 
+        self.packages_model = QStringListModel()
         self.proxy_packages_model = QSortFilterProxyModel()
-        self.proxy_packages_model.setSourceModel(self.packages_model)
 
         # Setup the user interface
         self.parent = parent
@@ -55,7 +55,7 @@ class Uninstall(QDockWidget):
         uic.loadUi('Pug/ui/docks/uninstall/uninstall.ui', self)
         self.bind_signals()
 
-        self.packages_list.setModel(self.proxy_packages_model)
+        self.packages_view.setModel(self.proxy_packages_model)
 
         # Update the package list on initialisation
         self.update_package_list("")
@@ -65,28 +65,34 @@ class Uninstall(QDockWidget):
 
         self.button_uninstall.clicked.connect(self.uninstall_package)
 
-    def get_packages(self, python_version=3) -> list:
-        # TODO: Switch everything over to QProcess (not subprocess.run)
+    def get_packages(self, python_version=2) -> list:
+        self.get_packages_process = QProcess()
+
         if python_version == 3:
-            # Use Pip's module to avoid warnings, on Linux
-            try:
-                pip_freeze_output = subprocess.run(['python3', '-m', 'pip', 'freeze'], capture_output=True)
-            except FileNotFoundError:
-                # On Windows, Python 2 is not installed
-                pip_freeze_output = subprocess.run(['python', '-m', 'pip', 'freeze'], capture_output=True)
+            # Try the python3 command, otherwise fallback to the python command
+            if shutil.which("python3"):
+                self.get_packages_process.setProgram("python3")
+            else:
+                self.get_packages_process.setProgram("python")
         else:
-            # Use Python 2
-            pip_freeze_output = subprocess.run(['python', '-m', 'pip', 'freeze'], capture_output=True)
+            self.get_packages_process.setProgram("python")
 
-        packages = []
-        if pip_freeze_output:
-            installed_packages = pip_freeze_output.stdout.decode("utf-8").split()
+        if self.get_packages_process.program():
+            self.get_packages_process.setArguments(["-m", "pip", "list", "--format", "freeze"])
 
+        self.get_packages_process.finished.connect(self.get_packages_finished)
+        self.get_packages_process.start()
+
+    def get_packages_finished(self):
+        str_data = str(self.get_packages_process.readAll(), 'utf-8').strip()
+        if str_data:
+            installed_packages = str_data.split()
             for package in installed_packages:
                 package_name, package_version = package.split("==")
-                packages.append(package_name)
+                self.packages_list.append(package_name)
 
-        return packages
+        self.packages_model = QStringListModel(self.packages_list)
+        self.proxy_packages_model.setSourceModel(self.packages_model)
 
     @pyqtSlot(str)
     def update_package_list(self, text):
@@ -107,11 +113,10 @@ class Uninstall(QDockWidget):
         except:
             print("Filtering Installed Packages Time: " + str(end_time - start_time))
 
-
     @pyqtSlot()
     def uninstall_package(self, python_version=3):
         """ Uninstalls the selected package """
-        current_item_index = self.packages_list.currentIndex()
+        current_item_index = self.packages_view.currentIndex()
 
         if current_item_index:
             package = current_item_index.data(Qt.DisplayRole)
@@ -131,7 +136,7 @@ class Uninstall(QDockWidget):
 
             if self.pip_process:
                 self.pip_process.readyReadStandardOutput.connect(self.update_uninstallation_process)
-                self.pip_process.finished.connect(self.on_pip_process_finished)
+                self.pip_process.finished.connect(self.get_packages_finished)
                 self.pip_process.start()
 
     def update_uninstallation_process(self):
