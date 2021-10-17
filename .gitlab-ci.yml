@@ -37,7 +37,6 @@ build win x86_64:
     - cd ../
   tags:
     - windows
-    - x86_64
   artifacts:
     paths:
       - src/dist/
