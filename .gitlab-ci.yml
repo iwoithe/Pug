@@ -34,12 +34,12 @@ build windows:
   before_script:
     - choco install python --version=3.9.7 -y -f
     - refreshenv
-    - python3 -V  # Print out python version for debugging
-    - python3 -m pip install virtualenv
+    - "C:\\Python39\\python.exe -V"  # Print out python version for debugging
+    - "C:\\Python39\\python.exe -m pip install virtualenv"
     - virtualenv venv
     - source venv/bin/activate
-    - python3 -m pip install pyinstaller
-    - python3 -m pip install -r requirements.txt
+    - "C:\\Python39\\python.exe -m pip install pyinstaller"
+    - "C:\\Python39\\python.exe -m pip install -r requirements.txt"
   script:
     - cd src/
     - pyinstaller --onefile --windowed -n Pug main.py
