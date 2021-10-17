@@ -29,8 +29,10 @@ before_script:
 stages:
   - build
 
-build win x86_64:
+build windows:
   stage: build
+  before_script:
+    - choco install python --version=3.9.7 -y -f
   script:
     - cd src/
     - pyinstaller --onefile --windowed -n Pug main.py
