@@ -33,17 +33,16 @@ build windows:
   stage: build
   before_script:
     - choco install python --version=3.9.7 -y -f
-    - "set PATH=%PATH%;C:\\Python39;C:\\Python39\\Scripts"
     - refreshenv
-    - python -V  # Print out python version for debugging
-    - python -m pip install virtualenv"
-    - virtualenv venv
-    - source venv/bin/activate
-    - python -m pip install pyinstaller"
-    - python -m pip install -r requirements.txt"
+    - "C:\\Python39\\python.exe -V"  # Print out python version for debugging
+    - "C:\\Python39\\python.exe -m pip install virtualenv"
+    - "C:\\Python39\\Scripts\\virtualenv.exe venv"
+    - "venv\\bin\\activate.bat"
+    - "C:\\Python39\\python.exe -m pip install pyinstaller"
+    - "C:\\Python39\\python.exe -m pip install -r requirements.txt"
   script:
     - cd src/
-    - pyinstaller --onefile --windowed -n Pug main.py
+    - "C:\\Python39\\Scripts\\pyinstaller.exe --onefile --windowed -n Pug main.py
     - cd ../
   tags:
     - windows
